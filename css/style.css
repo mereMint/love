@@ -714,15 +714,17 @@ body.pixel-theme .gallery-item img {
     }
 
     button.spin-btn {
-        font-size: 1rem !important;
-        /* Smaller button text */
-        padding: 10px 20px !important;
-        white-space: nowrap;
-        /* Prevent wrapping if possible, or allow it if text is long? */
-        /* Actually, if "Come back tomorrow" is too long, we want it to wrap or shrink */
+        font-size: 0.8rem !important;
+        /* Even smaller to fit "COOLDOWN: XX:XX" */
+        padding: 8px 10px !important;
+        white-space: normal;
+        /* Allow wrapping */
+        word-wrap: break-word;
         width: 100%;
-        /* Ensure it fits container */
         max-width: 220px;
+        line-height: 1.2;
+        min-height: 44px;
+        /* Ensure clickable area */
     }
 }
 
