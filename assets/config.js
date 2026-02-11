@@ -80,7 +80,7 @@ window.LOVE_CONFIG = {
             "falling_effect_count": 0
         },
         "winter": {
-            "style": "pixel",
+            "style": "round",
             "colors": {
                 "primary": "#87cefa",   // Light Sky Blue
                 "secondary": "#b0e0e6", // Powder Blue
