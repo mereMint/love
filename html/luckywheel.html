@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Wheel - Slot Machine</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Specific Slot Machine Styles */
+        .slot-machine-container {
+            background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-secondary) 100%);
+            border: 8px solid var(--color-primary);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            position: relative;
+            box-shadow:
+                0 0 20px var(--color-primary),
+                inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .screen {
+            background-color: var(--color-white);
+            border: 4px solid var(--color-primary);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .slot-text {
+            font-size: 1.5rem;
+            color: var(--color-text);
+            font-weight: 600;
+            padding: 0 20px;
+        }
+
+        .lever-container {
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 150px;
+            width: 60px;
+            perspective: 1000px;
+            /* Enable 3D depth */
+        }
+
+        .lever-base {
+            width: 40px;
+            height: 100px;
+            background: linear-gradient(to bottom, #888, #555, #333);
+            border: 4px solid var(--color-primary);
+            border-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            box-shadow: 6px 0 15px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .lever-arm {
+            width: 14px;
+            height: 120px;
+            background: linear-gradient(to right, #999, #eee 40%, #999);
+            position: absolute;
+            top: 0px;
+            left: 23px;
+            border-radius: 10px;
+            cursor: pointer;
+            transform-origin: bottom center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+        }
+
+        .lever-arm.pulled {
+            transform: rotateX(-60deg) translateY(10px);
+            /* 3D pull into/down */
+        }
+
+        .lever-knob {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 35% 35%, var(--color-primary), var(--color-text));
+            border-radius: 50%;
+            position: absolute;
+            top: -45px;
+            left: -18px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5), inset -5px -5px 12px rgba(0, 0, 0, 0.3);
+            border: 3px solid var(--color-white);
+            transition: transform 0.2s;
+        }
+
+        .lever-arm:active .lever-knob {
+            transform: scale(0.9);
+        }
+
+        button.spin-btn {
+            background: var(--color-primary);
+            color: white;
+            font-family: var(--font-main);
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border: 4px solid var(--color-white);
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: var(--shadow);
+            transition: all 0.1s;
+        }
+
+        button.spin-btn:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        button.spin-btn:disabled {
+            background: #ccc;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .lights {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .light {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-secondary);
+            opacity: 0.3;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .light.on {
+            opacity: 1;
+            background: var(--color-primary);
+            box-shadow: 0 0 15px var(--color-primary);
+        }
+
+        /* Rarity Colors */
+        .rarity-common {
+            color: var(--color-text);
+        }
+
+        .rarity-rare {
+            color: var(--color-primary);
+            text-shadow: 0 0 5px var(--color-secondary);
+        }
+
+        .rarity-epic {
+            color: var(--color-primary);
+            text-shadow: 0 0 10px var(--color-secondary), 0 0 20px var(--color-white);
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="luckywheel.html">Lucky Wheel</a>
+    </nav>
+
+    <div class="container">
+        <h1>Vegas of Love</h1>
+        <p>Pull the lever to win a prize!</p>
+
+        <div class="slot-machine-container">
+            <div class="lights">
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+                <div class="light"></div>
+            </div>
+
+            <div class="screen">
+                <div id="slot-display" class="slot-text">PULL LEVER</div>
+            </div>
+
+            <!-- Visual Lever System -->
+            <div class="lever-container">
+                <div class="lever-base"></div>
+                <div class="lever-arm">
+                    <div class="lever-knob"></div>
+                </div>
+            </div>
+
+            <button id="spin-btn" class="spin-btn">SPIN!</button>
+        </div>
+
+        <div id="result-message" style="margin-top: 20px; min-height: 2em; font-size: 0.8rem; color: #888;"></div>
+    </div>
+
+    <script src="../assets/config.js"></script>
+    <script src="../assets/wheel_data.js"></script>
+    <script src="../js/wheel.js"></script>
+    <script src="../js/theme.js"></script>
+</body>
+
+</html>

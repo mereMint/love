@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Story</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="html/luckywheel.html">Lucky Wheel</a>
+    </nav>
+
+    <div class="container">
+        <!-- Big Timer Section -->
+        <section id="timer-section" class="pixel-border" style="margin-bottom: 40px;">
+            <h2>We have been together for:</h2>
+            <div id="main-timer" style="font-size: 1.5rem; color: var(--color-pink); margin: 20px 0;">
+                Loading...
+            </div>
+        </section>
+
+        <!-- Funny Stats Section -->
+        <section id="stats-section">
+            <h3>Fun Facts <span class="heart">♥</span></h3>
+            <div id="funny-stats" style="font-size: 0.9rem; color: var(--color-blue); min-height: 100px;">
+                <!-- JS will inject stats here -->
+            </div>
+        </section>
+
+        <!-- Spotify Embed Section -->
+        <footer style="margin-top: 60px; border-top: 2px dashed var(--color-text); padding-top: 20px;">
+            <h3>Our Playlist 🎵</h3>
+            <iframe style="border-radius:12px"
+                src="https://open.spotify.com/embed/playlist/6ZEoW8p0Bcx4NrYKrkMhi0?utm_source=generator&theme=0"
+                width="100%" height="152" frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+        </footer>
+    </div>
+
+    <!-- Bottom Theme Decorations -->
+    <div id="theme-bottom-layer"></div>
+
+    <!-- Config JS (Loaded before logic to work locally without server) -->
+    <script src="assets/config.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+
+</html>
